@@ -58,8 +58,11 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-md bg-black/40 text-white border-b border-white/10 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <nav className="sticky top-0 z-50 backdrop-blur-md bg-black/40 dark:bg-black/40 text-white dark:text-white border-b border-white/10 dark:border-white/10 shadow-sm">
+    {/* // <nav "sticky top-0 z-50 backdrop-blur-md bg-white text-black border-b border-gray-200 shadow-sm dark:bg-white dark:text-black"> */}
+
+
+     <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <NavLink to={'/'}>
           <div className="flex gap-2 items-center">
