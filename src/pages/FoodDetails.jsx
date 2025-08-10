@@ -22,7 +22,7 @@ const FoodDetails = () => {
  const { data: food, isLoading, isError } = useQuery({
   queryKey: ['foodDetails', id],
   queryFn: () => 
-    axios.get(`https://share-bite-a11-server.vercel.app/food-details/${id}`)
+    axios.get(`https://share-bite-server.vercel.app/food-details/${id}`)
          .then(res => res.data)
 });
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
@@ -51,7 +51,7 @@ const FoodDetails = () => {
       </button>
     </div>
   );
-  if (!food) return <div className='text-center p-4 text-2xl'>Food not found</div>;
+  
 
  const requestSubmission=()=>{
   if(user){
@@ -293,8 +293,6 @@ const FoodDetails = () => {
 
 
                     </div>
-
-
                     {/* donator name  */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
@@ -424,18 +422,7 @@ const FoodDetails = () => {
       </div>
     </div>
 
-
-
-
-
-
-
-
-
-
  </div>
-
-    
   );
 };
 
