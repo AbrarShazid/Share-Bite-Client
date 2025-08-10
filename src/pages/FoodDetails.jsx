@@ -7,10 +7,14 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import LoadingSpinner from "../Components/LoadingSpinner"
+import { useQueryClient } from '@tanstack/react-query';
+import { MdErrorOutline } from "react-icons/md";
+import { FaRedoAlt } from "react-icons/fa";
 
 const FoodDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure()
+    const queryClient = useQueryClient();
 
   const { user } = use(AuthContext);
   // food details fetch 
@@ -22,7 +26,31 @@ const FoodDetails = () => {
          .then(res => res.data)
 });
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
-  if (isError) return <div className='text-center p-4 text-2xl'>Error loading food details</div>;
+ 
+   if (isError) return (
+    <div className="flex flex-col items-center justify-center py-16 bg-gradient-to-b from-[#fffaf5] to-white">
+      {/* Icon */}
+      <div className="bg-red-100 p-4 rounded-full mb-4">
+         <MdErrorOutline   className="h-10 w-10 text-red-500"/>
+      </div>
+  
+      {/* Message */}
+      <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
+      <p className="text-gray-600 mb-6 max-w-md text-center">
+        We couldn’t load the available food details. Please check your connection and try again.
+      </p>
+  
+      {/* Retry Button */}
+      <button
+        onClick={() => queryClient.invalidateQueries(['allFoods'])} 
+        className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition-colors"
+      >
+       
+        <FaRedoAlt className="h-4 w-4" />
+        Retry
+      </button>
+    </div>
+  );
   if (!food) return <div className='text-center p-4 text-2xl'>Food not found</div>;
 
  const requestSubmission=()=>{
