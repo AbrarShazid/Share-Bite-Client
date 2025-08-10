@@ -114,7 +114,7 @@ const AboutUs = () => {
             </p>
           </div>
 
-            <Link to={'/blog'}>
+            <Link to={'/about-us'}>
              <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

@@ -11,7 +11,7 @@ import Register from "../pages/Register";
 import PrivateRoute from "../provider/PrivateRoute";
 import FoodDetails from "../pages/FoodDetails";
 import Update from "../pages/Update";
-import Blog from "../pages/Blog";
+import AboutUsDetails from "../pages/AboutUsDetails";
 
 
 const router = createBrowserRouter([
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
         element: <AvailableFood></AvailableFood>
       },
       {
-        path:"/blog",
-       element:<Blog></Blog>
+        path:"/about-us",
+       element:<AboutUsDetails></AboutUsDetails>
       },
       {
         path: "/food/:id",

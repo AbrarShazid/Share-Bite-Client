@@ -44,7 +44,7 @@ const Navbar = () => {
     <>
       <NavLink  onClick={toggleMenu} to="/" className={navItemClass}>Home</NavLink>
       <NavLink  onClick={toggleMenu} to="/available-food" className={navItemClass}>Available Food</NavLink>
-        <NavLink onClick={toggleMenu} to="/blog" className={navItemClass}>Blog</NavLink>
+        <NavLink onClick={toggleMenu} to="/about-us" className={navItemClass}>About Us</NavLink>
 
        {user ? (
       <>

@@ -8,6 +8,7 @@ import { BiDonateHeart, BiEdit, BiTrash } from "react-icons/bi";
 
 import dummyBackup from "../assets/dummyFood.webp"
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import LoadingSpinner from "../Components/LoadingSpinner" 
 
 const ManageMyFood = () => {
   const { user } = use(AuthContext);
@@ -20,10 +21,11 @@ const ManageMyFood = () => {
     return res.data;
   };
 
-  const { data: foods = [], isError } = useQuery({
+  const { data: foods = [], isError ,isLoading } = useQuery({
     queryKey: ["individualItems", user.email],
     queryFn: allData
   });
+  
 
   useEffect(() => {
     if (isError) {
@@ -34,6 +36,7 @@ const ManageMyFood = () => {
       });
     }
   }, [isError]);
+  
 
   // Delete functionality
   const deleteMutation = useMutation({
@@ -62,6 +65,10 @@ const ManageMyFood = () => {
       }
     });
   };
+
+   if (isLoading) return   <div className="min-h-screen flex justify-center items-center">
+        <LoadingSpinner></LoadingSpinner>
+      </div>;
 
   return (
   <div className="bg-gradient-to-b from-[#fffaf5] to-white">
