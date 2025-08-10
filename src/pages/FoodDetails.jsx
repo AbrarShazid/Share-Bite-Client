@@ -22,7 +22,7 @@ const FoodDetails = () => {
  const { data: food, isLoading, isError } = useQuery({
   queryKey: ['foodDetails', id],
   queryFn: () => 
-    axios.get(`https://share-bite-server.vercel.app/food-details/${id}`)
+    axios.get(`https://share-bite-a11-server.vercel.app/food-details/${id}`)
          .then(res => res.data)
 });
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
