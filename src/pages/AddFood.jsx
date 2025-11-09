@@ -64,7 +64,7 @@ const AddFood = () => {
   };
 
   return (
-    <div className=" bg-gradient-to-b from-[#fffaf5] to-white py-8">
+    <div className=" bg-gradient-to-b from-[#fffaf5] to-white py-8 text-black">
 
       <div className="max-w-2xl mx-auto p-6 md:p-8  bg-white rounded-xl shadow-lg  ">
         <div className="text-center mb-8">

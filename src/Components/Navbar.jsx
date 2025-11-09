@@ -16,24 +16,16 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-
   const signOut = () => {
 
     logOut()
       .then(res => {
-
         toast.success("Log Out Successful!")
-
       })
       .catch(err => {
         toast.error("Something Went Wrong!!!")
       })
-
-
   }
-
-
-
 
   const navItemClass = ({ isActive }) =>
     isActive
@@ -91,9 +83,6 @@ const Navbar = () => {
         {/* Right Side  */}
         <div className="hidden lg:flex ">
 
-
-
-
           {
             loading ? <Lottie animationData={spinner} className="h-[40px]"></Lottie> :
               <div className="space-x-4 ">
@@ -108,13 +97,8 @@ const Navbar = () => {
                     <button onClick={signOut} >Log Out</button>
                     
                     </div>
-                  
-                  
                     :
-
                     <>
-
-
                       <NavLink to="/login" className={navItemClass}>Log In</NavLink>
                       <NavLink to="/register" className={navItemClass}>Register</NavLink>
 
@@ -122,9 +106,6 @@ const Navbar = () => {
                 }
               </div>
           }
-
-
-
 
         </div>
       </div>

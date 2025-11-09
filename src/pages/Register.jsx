@@ -1,17 +1,38 @@
 import React, { use } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router'; // Fixed import
 import { AuthContext } from '../provider/AuthContext';
 import toast from 'react-hot-toast';
 import { updateProfile } from 'firebase/auth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+
 
 const Register = () => {
 
-  const { setUser, createUser, signGoogle } = use(AuthContext)
+  const axiosSecure = useAxiosSecure()
 
+  const { setUser, createUser, signGoogle } = use(AuthContext);
   const navigate = useNavigate()
 
-  const handleReg = (e) => {
+
+  const saveUserToDB = async (email, name, photo) => {
+    try {
+      const userData = {
+        email: email,
+        name: name,
+        photoURL: photo || ""
+      };
+
+      const response = await axiosSecure.post('/save-user', userData);
+
+      return response.data;
+    } catch (error) {
+
+      console.error('Failed to save user to database:', error);
+      throw error;
+    }
+  };
+  const handleReg = async (e) => { // Made async
     e.preventDefault();
     const form = e.target
     const email = form.email.value
@@ -21,90 +42,86 @@ const Register = () => {
 
     if (!/[A-Z]/.test(pass)) {
       toast.error("Password must include at least one uppercase letter.", {
-
         style: {
           border: '1px solid gray',
           backgroundColor: "#f2555d",
           padding: '6px',
           color: 'white',
         }
-
       });
       return;
     }
 
     if (!/[a-z]/.test(pass)) {
       toast.error("Password must include at least one lowercase letter.", {
-
         style: {
           border: '1px solid gray',
           backgroundColor: "#f2555d",
           padding: '6px',
           color: 'white',
         }
-
       });
       return;
     }
+
     if (pass.length < 6) {
       toast.error("Password must be at least 6 characters long.", {
-
         style: {
           border: '1px solid gray',
           backgroundColor: "#f2555d",
           padding: '6px',
           color: 'white',
         }
-
       });
       return;
     }
 
-    createUser(email, pass)
-      .then(result => {
-        const user = result.user
+    try {
+      // Create user in Firebase
+      const result = await createUser(email, pass);
+      const user = result.user
 
-        updateProfile(user, {
-          displayName: name,
-          photoURL: photo,
-        })
-          .then(() => {
-            toast.success("SignUp Successful!");
-            setUser({ ...user, displayName: name, photoURL: photo });
-            e.target.reset();
-            navigate("/");
-          })
+      // Update profile in Firebase
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: photo,
+      });
 
 
-      })
-      .catch(err => {
 
-       if (err.code === 'auth/email-already-in-use') {
+      toast.success("SignUp Successful!");
+      setUser({ ...user, displayName: name, photoURL: photo });
+
+      saveUserToDB(email, name, photo);
+
+
+
+      e.target.reset();
+      navigate("/");
+    } catch (err) {
+      if (err.code === 'auth/email-already-in-use') {
         toast.error('This email is already registered.');
       } else {
         toast.error(`Error: ${err.message}`);
       }
-
-      })
-
+    }
   }
+
   // google sign in 
+  const registerGoogle = async () => { // Made async
+    try {
+      const result = await signGoogle();
+      const user = result.user;
 
+      // Save Google user to database
+      await saveUserToDB(user);
 
-  const registerGoogle = () => {
-    console.log("asd");
-
-    signGoogle()
-      .then(res => {
-        toast.success('Successfully Log in.')
-navigate("/");
-      })
-      .catch(err => {
-        toast.error(`error ${err.message}`)
-
-      })
+      toast.success('Successfully Registered!');
+      navigate("/");
+    } catch (err) {
+      toast.error(`Error: ${err.message}`);
+    }
   }
-
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4 py-[5%] bg-gradient-to-b from-[#fffaf5] to-white">
@@ -149,7 +166,6 @@ navigate("/");
               type="url"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#ff6d03] text-gray-700 placeholder-gray-400"
               placeholder="Link to your photo"
-              required
             />
           </div>
 
