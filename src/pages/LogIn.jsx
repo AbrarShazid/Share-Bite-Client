@@ -81,8 +81,8 @@ const LogIn = () => {
           </div>
           <div className="text-sm text-gray-600 text-right">
 
-            Don't have an account?{" "}<Link to="/register">
-              <span className="text-[#ff6d03] font-bold underline">Register</span>
+            <Link to="/forgot-pass">
+              <span className="text-[#ff6d03] font-semibold underline">Forgot Password?</span>
             </Link>
           </div>
 
@@ -105,6 +105,16 @@ const LogIn = () => {
             <FcGoogle size={20} />
             <span>Sign in with Google</span>
           </button>
+
+
+
+              <div className="text-sm text-gray-600 text-center mt-2">
+
+            Don't have an account?{" "}<Link to="/register">
+              <span className="text-[#ff6d03] font-bold underline">Register</span>
+            </Link>
+          </div>
+
         </div>
       </div>
       <div className='hidden lg:block'>

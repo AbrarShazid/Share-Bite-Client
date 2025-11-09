@@ -12,6 +12,7 @@ import PrivateRoute from "../provider/PrivateRoute";
 import FoodDetails from "../pages/FoodDetails";
 import Update from "../pages/Update";
 import AboutUsDetails from "../pages/AboutUsDetails";
+import ForgotPass from "../pages/ForgotPass";
 
 
 const router = createBrowserRouter([
@@ -74,6 +75,11 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register></Register>
       },
+      {
+        path:"/forgot-pass",
+        element:<ForgotPass></ForgotPass>
+
+      }
     ]
   },
 
