@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, {  useState,use } from "react";
 import { NavLink } from "react-router";
 import { AuthContext } from "../provider/AuthContext";
 import toast from "react-hot-toast";
@@ -6,10 +6,13 @@ import spinner from "../assets/loading_small.json"
 import Lottie from "lottie-react";
 import dummyProfile from "../assets/dummy.webp"
 import logo from "../assets/Favicon1.webp"
+import useUserRole from "../hooks/useUserRole";
 
 
 const Navbar = () => {
   const { user, logOut, loading } = use(AuthContext)
+  const {role,isLoading}=useUserRole()
+
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -34,27 +37,32 @@ const Navbar = () => {
 
   const centerItem = (
     <>
-      <NavLink  onClick={toggleMenu} to="/" className={navItemClass}>Home</NavLink>
-      <NavLink  onClick={toggleMenu} to="/available-food" className={navItemClass}>Available Food</NavLink>
-        <NavLink onClick={toggleMenu} to="/about-us" className={navItemClass}>About Us</NavLink>
-
-       {user ? (
-      <>
-        <NavLink onClick={toggleMenu} to="/add-food" className={navItemClass}>Add Food</NavLink>
-        <NavLink onClick={toggleMenu} to="/manage-my-food" className={navItemClass}>Manage My Food</NavLink>
-        <NavLink onClick={toggleMenu} to="/food-request" className={navItemClass}>My Food Request</NavLink>
-      </>
-    ) : null}
-     
+      <NavLink onClick={toggleMenu} to="/" className={navItemClass}>Home</NavLink>
+      <NavLink onClick={toggleMenu} to="/available-food" className={navItemClass}>Available Food</NavLink>
+      <NavLink onClick={toggleMenu} to="/about-us" className={navItemClass}>About Us</NavLink>
+      {/* ✅ Role-based menu items */}
+      {user && !isLoading && role === "user" && (
+        <>
+          <NavLink onClick={toggleMenu} to="/add-food" className={navItemClass}>Add Food</NavLink>
+          <NavLink onClick={toggleMenu} to="/manage-my-food" className={navItemClass}>Manage My Food</NavLink>
+          <NavLink onClick={toggleMenu} to="/food-request" className={navItemClass}>My Food Request</NavLink>
+        </>
+      )}
+      {user && !isLoading && (role === "admin" ||role==='super-admin') && (
+        <>
+          <NavLink onClick={toggleMenu} to="/dashboard" className={navItemClass}>Dashboard</NavLink>
+        </>
+      )}
+   
     </>
   );
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-md bg-black/40 dark:bg-black/40 text-white dark:text-white border-b border-white/10 dark:border-white/10 shadow-sm">
-    {/* // <nav "sticky top-0 z-50 backdrop-blur-md bg-white text-black border-b border-gray-200 shadow-sm dark:bg-white dark:text-black"> */}
+      {/* // <nav "sticky top-0 z-50 backdrop-blur-md bg-white text-black border-b border-gray-200 shadow-sm dark:bg-white dark:text-black"> */}
 
 
-     <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <NavLink to={'/'}>
           <div className="flex gap-2 items-center">
@@ -88,14 +96,14 @@ const Navbar = () => {
               <div className="space-x-4 ">
                 {
                   user ?
-                  <div className="flex gap-4">
-                    <img
-              src={user?.photoURL ? user.photoURL : dummyProfile}
-              alt={user?.displayName || "User"}
-              className="h-8 sm:h-9  w-8 sm:w-9 md:h-11  md:w-11 rounded-full border-2 border-white shadow-md object-cover transition-transform duration-600 hover:scale-110"
-            />
-                    <button onClick={signOut} >Log Out</button>
-                    
+                    <div className="flex gap-4">
+                      <img
+                        src={user?.photoURL ? user.photoURL : dummyProfile}
+                        alt={user?.displayName || "User"}
+                        className="h-8 sm:h-9  w-8 sm:w-9 md:h-11  md:w-11 rounded-full border-2 border-white shadow-md object-cover transition-transform duration-600 hover:scale-110"
+                      />
+                      <button onClick={signOut} >Log Out</button>
+
                     </div>
                     :
                     <>

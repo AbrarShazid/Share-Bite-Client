@@ -13,6 +13,16 @@ import FoodDetails from "../pages/FoodDetails";
 import Update from "../pages/Update";
 import AboutUsDetails from "../pages/AboutUsDetails";
 import ForgotPass from "../pages/ForgotPass";
+import ExampleComponent from "../pages/ExampleComponent";
+import DashboardLayout from "../Layout/DashboardLayOut";
+import AdminRoute from "../provider/AdminRoute";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import MyProfile from "../pages/Dashboard/MyProfile";
+import AllUser from "../pages/Dashboard/AllUser";
+import Allpost from "../pages/Dashboard/Allpost";
+import ManageAdmin from "../pages/Dashboard/super admin/ManageAdmin";
+
+
 
 
 const router = createBrowserRouter([
@@ -26,20 +36,29 @@ const router = createBrowserRouter([
       }
       ,
       {
+        path: "/example",
+        element: <PrivateRoute>
+          <ExampleComponent></ExampleComponent>
+        </PrivateRoute>
+      },
+
+      {
         path: "/available-food",
         element: <AvailableFood></AvailableFood>
       },
       {
-        path:"/about-us",
-       element:<AboutUsDetails></AboutUsDetails>
+        path: "/about-us",
+        element: <AboutUsDetails></AboutUsDetails>
       },
       {
         path: "/food/:id",
-       
-        element: 
+
+        element:
           <FoodDetails></FoodDetails>
-   ,
+
       },
+
+
       {
         path: "/add-food",
 
@@ -56,7 +75,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/update/:id",
-       
+
         element: <PrivateRoute>
           <Update></Update>
         </PrivateRoute>
@@ -76,11 +95,40 @@ const router = createBrowserRouter([
         element: <Register></Register>
       },
       {
-        path:"/forgot-pass",
-        element:<ForgotPass></ForgotPass>
+        path: "/forgot-pass",
+        element: <ForgotPass></ForgotPass>
 
       }
     ]
+  },
+  {
+    path: "/dashboard",
+    element: <AdminRoute>
+      <DashboardLayout></DashboardLayout>
+    </AdminRoute>,
+    children: [
+      {
+        index: true,
+        element: <Dashboard></Dashboard>
+      },
+      {
+        path:"profile",
+        element:<MyProfile></MyProfile>
+      },
+      {
+        path:"all-user",
+        element:<AllUser></AllUser>
+      },
+      {
+        path:"all-post",
+        element:<Allpost></Allpost>
+      },
+      {
+        path:"manage-admin",
+        element:<ManageAdmin></ManageAdmin>
+      }
+    ]
+
   },
 
   {

@@ -19,9 +19,6 @@ const AddFood = () => {
     e.preventDefault();
 
     setIsSubmitting(true);
-
-
-
     const form = e.target
 
     const name = form.name.value

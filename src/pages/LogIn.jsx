@@ -24,7 +24,7 @@ const LogIn = () => {
         toast.success("Log in Successful!");
         e.target.reset()
           navigate(`${location.state?location.state:"/"}`)
-          console.log(`${location.state}`);
+          
       })
       .catch(err => {
         toast.error(err.message);

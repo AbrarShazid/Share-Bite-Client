@@ -4,12 +4,12 @@ import { Link, useNavigate } from 'react-router'; // Fixed import
 import { AuthContext } from '../provider/AuthContext';
 import toast from 'react-hot-toast';
 import { updateProfile } from 'firebase/auth';
-import useAxiosSecure from '../hooks/useAxiosSecure';
+import axios from 'axios';
 
 
 const Register = () => {
 
-  const axiosSecure = useAxiosSecure()
+
 
   const { setUser, createUser, signGoogle } = use(AuthContext);
   const navigate = useNavigate()
@@ -20,16 +20,22 @@ const Register = () => {
       const userData = {
         email: email,
         name: name,
-        photoURL: photo || ""
+        photoURL: photo || "",
+        createdAt: new Date().toISOString()
       };
 
-      const response = await axiosSecure.post('/save-user', userData);
+      const response = await axios.post('https://share-bite-a11-server.vercel.app/save-user', userData);
+      if (response.data.insertedId) {
+        console.log('User saved to database with ID:', response.data.insertedId);
+      } else if (response.data.message === "User already exists") {
+        console.log('User already exists in database');
+      }
 
       return response.data;
     } catch (error) {
 
       console.error('Failed to save user to database:', error);
-      throw error;
+      return null;
     }
   };
   const handleReg = async (e) => { // Made async
@@ -108,13 +114,13 @@ const Register = () => {
   }
 
   // google sign in 
-  const registerGoogle = async () => { // Made async
+  const registerGoogle = async () => {
     try {
       const result = await signGoogle();
       const user = result.user;
 
       // Save Google user to database
-      await saveUserToDB(user);
+      await saveUserToDB(user.email, user.displayName, user.photoURL);
 
       toast.success('Successfully Registered!');
       navigate("/");
