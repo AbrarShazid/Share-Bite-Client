@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthContext";
 
 const axiosInstance = axios.create({
-    baseURL: `https://one-roof-a12-server.vercel.app`
+    baseURL: `https://share-bite-a11-server.vercel.app`
 //  baseURL: `http://localhost:5000`
 });
 
