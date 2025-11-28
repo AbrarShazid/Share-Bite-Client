@@ -60,7 +60,6 @@ const AddFood = () => {
 
         form.reset();
       })
-
   };
 
 const downloadInvoice = () => {
@@ -184,10 +183,10 @@ const downloadInvoice = () => {
   return (
     <>
      {showInvoice && invoiceData && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs bg-opacity-40 flex justify-center items-center z-[9999] p-4">
-          <div className="bg-white w-full max-w-2xl rounded-lg shadow-lg relative">
+        <div className="fixed inset-0 bg-black/70 bg-opacity-40 flex justify-center items-center z-[9999] p-4 overflow-y-auto">
+          <div className="bg-white w-full max-w-2xl rounded-lg shadow-lg relative my-8 max-h-[90vh] overflow-y-auto">
             {/* Header - Matching PDF */}
-            <div className="bg-[#ff6d03] text-white py-4 px-6 rounded-t-lg">
+            <div className="bg-[#ff6d03] text-white py-4 px-6 rounded-t-lg sticky top-0 z-10">
               <h1 className="text-2xl font-bold text-center">Share Bite</h1>
               <p className="text-sm text-center opacity-90">Food Donation Invoice</p>
             </div>
@@ -263,7 +262,7 @@ const downloadInvoice = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-6 flex justify-between">
+           <div className="mt-6 flex justify-between sticky bottom-0 bg-white pt-4 pb-2">
                 <button
                   type="button"
                   className="px-6 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition font-medium"
@@ -429,10 +428,4 @@ const downloadInvoice = () => {
 };
 
 export default AddFood;
-
-
-
-
-
-
 
