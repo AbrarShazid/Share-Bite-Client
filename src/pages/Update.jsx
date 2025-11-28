@@ -90,8 +90,10 @@ const Update = () => {
                 <input
                   type="url"
                   name="img"
+                  
                   defaultValue={oldData?.img}
                   required
+                    disabled
                   placeholder="https://example.com/image.jpg"
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none placeholder-gray-400 text-gray-700"
                 />

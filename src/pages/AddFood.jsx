@@ -22,7 +22,7 @@ const AddFood = () => {
     const form = e.target
 
     const name = form.name.value
-    const img = form.image.value
+    const img = form.image.files[0]
     const quantity = parseInt(form.quantity.value);
     const expire = form.expireAt.value
     const location = form.location.value
@@ -30,22 +30,33 @@ const AddFood = () => {
     const userEmail = user.email
     const userName = user.displayName
     const availability = "Available"
+    const formData = new FormData();
 
-    const data = {
+    formData.append('name', name);
+  formData.append('image', img); // 
+  formData.append('quantity', quantity);
+  formData.append('expire', expire); 
+  formData.append('location', location);
+  formData.append('notes', notes);
+  formData.append('userEmail', userEmail);
+  formData.append('userName', userName);
+  formData.append('availability', availability);
 
-      name,
-      img,
-      quantity,
-      expire, location, notes,
-      userEmail,
-      userName,
-      availability
+    // const data = {
+
+    //   name,
+    //   img,
+    //   quantity,
+    //   expire, location, notes,
+    //   userEmail,
+    //   userName,
+    //   availability
 
 
-    }
+    // }
 
 
-    axiosSecure.post("/foods", data)
+    axiosSecure.post("/foods", formData)
       .then(res => {
         setIsSubmitting(false)
         toast.success(`${name} added successfully!`)
@@ -91,7 +102,7 @@ const AddFood = () => {
                 Food Image URL <span className="text-red-500">*</span>
               </label>
               <input
-                type="url"
+                type="file"
                 id="image"
                 name="image"
                 placeholder="https://example.com/food-image.jpg"
